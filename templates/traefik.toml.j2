@@ -9,14 +9,22 @@
         to = "websecure"
         scheme = "https"
         permanent = true
-      [entryPoints.web.observability]
-        accessLogs = false
-        metrics = false
-        tracing = false
+    [entryPoints.web.observability]
+      accessLogs = false
+      metrics = false
+      tracing = false
 {% endif %}
   [entryPoints.websecure]
     address = ":443"
     [entryPoints.websecure.http.tls]
+{% if traefik_api_insecure %}
+  [entryPoints.traefik]
+    address = ":8080"
+{% endif %}
+{% if traefik_metrics_prometheus %}
+  [entryPoints.metrics]
+    address = ":8081"
+{% endif %}
   [entryPoints.ping]
     address = ":8082"
 

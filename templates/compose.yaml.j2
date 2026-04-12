@@ -10,6 +10,9 @@ services:
     ports:
       - 80:80
       - 443:443
+      {% if traefik_metrics_prometheus %}
+      - {{ traefik_metrics_address }}:{{ traefik_metrics_port }}:8081
+      {% endif %}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./tls:/tls:ro

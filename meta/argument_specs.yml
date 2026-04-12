@@ -97,6 +97,16 @@ argument_specs:
         default: false
         description: Whether to enable Prometheus metrics endpoint.
 
+      traefik_metrics_address:
+        type: str
+        default: "127.0.0.1"
+        description: Host bind address for the Prometheus metrics port.
+
+      traefik_metrics_port:
+        type: int
+        default: 8081
+        description: Host port for the Prometheus metrics endpoint.
+
       traefik_dashboard_host:
         type: str
         default: traefik.example.com

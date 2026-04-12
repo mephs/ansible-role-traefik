@@ -14,7 +14,10 @@ traefik_log_level: info
 traefik_log_format: common
 traefik_access_log: false
 traefik_access_format: common
+
 traefik_metrics_prometheus: false
+traefik_metrics_address: 127.0.0.1
+traefik_metrics_port: 8081
 
 traefik_dashboard_host: traefik.example.com
 traefik_dashboard_tls: true
