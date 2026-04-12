@@ -1,0 +1,26 @@
+traefik_image_registry: docker.io
+traefik_image_repository: traefik
+traefik_image_tag: v3.6.13
+traefik_pull_image: true
+traefik_container_name: traefik
+
+traefik_docker_network: proxy
+
+traefik_http_redirect: true
+traefik_api_dashboard: false
+traefik_api_disable_ad: true
+traefik_api_insecure: false
+traefik_api_debug: false
+traefik_log_level: info
+traefik_log_format: common
+traefik_access_log: false
+traefik_access_format: common
+traefik_metrics_prometheus: false
+
+traefik_dashboard_host: traefik.example.com
+traefik_dashboard_tls: true
+
+traefik_tls_certificates: []
+traefik_extra_labels: {}
+
+traefik_compose_dir: /opt/traefik

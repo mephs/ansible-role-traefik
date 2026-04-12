@@ -1,0 +1,33 @@
+{{ ansible_managed | comment }}
+
+services:
+  traefik:
+    image: {{ traefik_image_registry }}/{{ traefik_image_repository }}:{{ traefik_image_tag }}
+    container_name: {{ traefik_container_name }}
+    restart: unless-stopped
+    security_opt: ["no-new-privileges:true"]
+    networks: ["{{ traefik_docker_network }}"]
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./tls:/tls:ro
+      - ./traefik.d:/traefik.d:ro
+      - ./traefik.toml:/etc/traefik/traefik.toml:ro
+    labels:
+      - traefik.enable=true
+      {% if traefik_api_dashboard | bool %}
+      - traefik.http.routers.dashboard.rule=Host(`{{ traefik_dashboard_host }}`)
+      - traefik.http.routers.dashboard.service=api@internal
+      - traefik.http.routers.dashboard.entrypoints={{ 'websecure' if traefik_dashboard_tls else 'web' }}
+      {% if traefik_dashboard_tls %}
+      - traefik.http.routers.dashboard.tls=true
+      {% endif %}
+      {% endif %}
+      {% for key, value in traefik_extra_labels.items() %}
+      - {{ key }}={{ value | lower }}
+      {% endfor %}
+networks:
+  {{ traefik_docker_network }}:
+    external: true

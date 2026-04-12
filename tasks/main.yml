@@ -1,0 +1,58 @@
+- name: Create compose directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+    state: directory
+  loop_control:
+    label: "{{ item.path }}"
+  loop:
+    - path: "{{ traefik_compose_dir }}"
+      mode: "0755"
+    - path: "{{ traefik_compose_dir }}/traefik.d"
+      mode: "0755"
+    - path: "{{ traefik_compose_dir }}/tls"
+      mode: "0700"
+
+- name: Render compose configuration
+  ansible.builtin.template:
+    src: compose.yaml.j2
+    dest: "{{ traefik_compose_dir }}/compose.yaml"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Render traefik configuration
+  ansible.builtin.template:
+    src: traefik.toml.j2
+    dest: "{{ traefik_compose_dir }}/traefik.toml"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart compose
+
+- name: Render certificates configuration
+  ansible.builtin.template:
+    src: tls.toml.j2
+    dest: "{{ traefik_compose_dir }}/traefik.d/tls.toml"
+    owner: root
+    group: root
+    mode: "0644"
+  when: traefik_tls_certificates | length > 0
+
+- name: Create docker network
+  community.docker.docker_network:
+    name: "{{ traefik_docker_network }}"
+
+- name: Pull image
+  community.docker.docker_image_pull:
+    name: "{{ traefik_image_registry }}/{{ traefik_image_repository }}"
+    tag: "{{ traefik_image_tag }}"
+  when: traefik_pull_image | bool
+
+- name: Run compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ traefik_compose_dir }}"
+  register: __traefik_compose_run
+  when: not ansible_check_mode | bool

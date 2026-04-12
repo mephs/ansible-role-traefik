@@ -1,0 +1,7 @@
+- name: Restart compose
+  community.docker.docker_compose_v2:
+    state: restarted
+    project_src: "{{ traefik_compose_dir }}"
+  when:
+    - not ansible_check_mode | bool
+    - not __traefik_compose_run.changed

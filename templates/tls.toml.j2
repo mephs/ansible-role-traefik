@@ -1,0 +1,8 @@
+{{ ansible_managed | comment }}
+
+{% for cert in traefik_tls_certificates %}
+[[tls.certificates]]
+  certFile = "/tls/{{ (cert.subdir + '/') if cert.subdir is defined else '' }}{{ cert.cert }}"
+  keyFile = "/tls/{{ (cert.subdir + '/') if cert.subdir is defined else '' }}{{ cert.key }}"
+
+{% endfor %}

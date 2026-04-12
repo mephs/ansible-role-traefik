@@ -1,0 +1,46 @@
+{{ ansible_managed | comment }}
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+{% if traefik_http_redirect %}
+    [entryPoints.web.http]
+      [entryPoints.web.http.redirections.entryPoint]
+        to = "websecure"
+        scheme = "https"
+        permanent = true
+      [entryPoints.web.observability]
+        accessLogs = false
+        metrics = false
+        tracing = false
+{% endif %}
+  [entryPoints.websecure]
+    address = ":443"
+    [entryPoints.websecure.http.tls]
+
+[providers]
+  [providers.docker]
+    exposedbydefault = false
+    network = "{{ traefik_docker_network }}"
+  [providers.file]
+    directory = "/traefik.d"
+
+[api]
+  dashboard = {{ traefik_api_dashboard | lower }}
+  disabledashboardad = {{ traefik_api_disable_ad | lower }}
+  insecure = {{ traefik_api_insecure | lower }}
+  debug = {{ traefik_api_debug | lower }}
+
+[log]
+  level = "{{ traefik_log_level | upper }}"
+  format = "{{ traefik_log_format }}"
+
+{% if traefik_access_log %}
+[accesslog]
+  format = "{{ traefik_access_format }}"
+{% endif %}
+
+{% if traefik_metrics_prometheus %}
+[metrics]
+  [metrics.prometheus]
+{% endif %}
