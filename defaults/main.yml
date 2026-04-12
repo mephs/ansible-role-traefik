@@ -6,6 +6,9 @@ traefik_container_name: traefik
 
 traefik_docker_network: proxy
 
+traefik_http_port: 80
+traefik_https_port: 443
+
 traefik_http_redirect: true
 traefik_api_dashboard: false
 traefik_api_insecure: false

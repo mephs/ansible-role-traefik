@@ -32,10 +32,15 @@ argument_specs:
         default: proxy
         description: Docker network name to create and attach Traefik to.
 
-      traefik_compose_dir:
-        type: str
-        default: /opt/traefik
-        description: Directory where compose and configuration files are placed.
+      traefik_http_port:
+        type: int
+        default: 80
+        description: Host port to publish the HTTP entrypoint on.
+
+      traefik_https_port:
+        type: int
+        default: 443
+        description: Host port to publish the HTTPS entrypoint on.
 
       traefik_http_redirect:
         type: bool
@@ -140,3 +145,8 @@ argument_specs:
         type: dict
         default: {}
         description: Additional Docker labels to apply to the Traefik container.
+
+      traefik_compose_dir:
+        type: str
+        default: /opt/traefik
+        description: Directory where compose and configuration files are placed.
