@@ -1,0 +1,27 @@
+galaxy_info:
+  role_name: traefik
+  author: mephs
+  description: Deploy Traefik reverse proxy via Docker Compose v2
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: EL
+      versions:
+        - "8"
+        - "9"
+    - name: Debian
+      versions:
+        - bullseye
+        - bookworm
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+        - noble
+  galaxy_tags:
+    - traefik
+    - docker
+    - proxy
+    - compose
+
+dependencies: []

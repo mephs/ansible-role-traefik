@@ -1,0 +1,137 @@
+argument_specs:
+  main:
+    short_description: Deploy Traefik reverse proxy via Docker Compose v2
+    options:
+      traefik_image_registry:
+        type: str
+        default: docker.io
+        description: Docker registry to pull the Traefik image from.
+
+      traefik_image_repository:
+        type: str
+        default: traefik
+        description: Traefik image repository.
+
+      traefik_image_tag:
+        type: str
+        default: v3.6.13
+        description: Traefik image tag.
+
+      traefik_pull_image:
+        type: bool
+        default: true
+        description: Whether to pull the image before starting the compose stack.
+
+      traefik_container_name:
+        type: str
+        default: traefik
+        description: Name of the Traefik container.
+
+      traefik_docker_network:
+        type: str
+        default: proxy
+        description: Docker network name to create and attach Traefik to.
+
+      traefik_compose_dir:
+        type: str
+        default: /opt/traefik
+        description: Directory where compose and configuration files are placed.
+
+      traefik_http_redirect:
+        type: bool
+        default: true
+        description: Whether to redirect HTTP to HTTPS on the web entrypoint.
+
+      traefik_api_dashboard:
+        type: bool
+        default: false
+        description: Whether to enable the Traefik dashboard.
+
+      traefik_api_disable_ad:
+        type: bool
+        default: true
+        description: Whether to disable the advertisement banner in the dashboard.
+
+      traefik_api_insecure:
+        type: bool
+        default: false
+        description: Whether to expose the API on the traefik entrypoint without authentication.
+
+      traefik_api_debug:
+        type: bool
+        default: false
+        description: Whether to enable debug endpoints in the API.
+
+      traefik_log_level:
+        type: str
+        default: info
+        choices:
+          - trace
+          - debug
+          - info
+          - warn
+          - error
+          - fatal
+          - panic
+        description: Traefik log level.
+
+      traefik_log_format:
+        type: str
+        default: common
+        choices:
+          - common
+          - json
+        description: Traefik log format.
+
+      traefik_access_log:
+        type: bool
+        default: false
+        description: Whether to enable access logs.
+
+      traefik_access_format:
+        type: str
+        default: common
+        choices:
+          - common
+          - genericCLF
+          - json
+        description: Access log format.
+
+      traefik_metrics_prometheus:
+        type: bool
+        default: false
+        description: Whether to enable Prometheus metrics endpoint.
+
+      traefik_dashboard_host:
+        type: str
+        default: traefik.example.com
+        description: Hostname for the Traefik dashboard router. Only used when traefik_api_dashboard is true.
+
+      traefik_dashboard_tls:
+        type: bool
+        default: true
+        description: Whether to enable TLS for the dashboard router. Only used when traefik_api_dashboard is true.
+
+      traefik_tls_certificates:
+        type: list
+        default: []
+        description: List of TLS certificates to configure in Traefik.
+        elements: dict
+        options:
+          cert:
+            type: str
+            required: true
+            description: Path to the certificate file relative to the tls directory.
+          key:
+            type: str
+            required: true
+            description: Path to the key file relative to the tls directory.
+          subdir:
+            type: str
+            required: false
+            description: Optional subdirectory inside the tls directory.
+
+      traefik_extra_labels:
+        type: dict
+        default: {}
+        description: Additional Docker labels to apply to the Traefik container.
