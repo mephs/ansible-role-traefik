@@ -26,7 +26,7 @@ services:
       {% endif %}
       {% endif %}
       {% for key, value in traefik_extra_labels.items() %}
-      - {{ key }}={{ value | lower }}
+      - "{{ key }}={{ value | lower if value is boolean else value }}"
       {% endfor %}
 networks:
   {{ traefik_docker_network }}:
