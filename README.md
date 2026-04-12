@@ -41,6 +41,17 @@ traefik_tls_certificates:
     subdir: traefik.example.com # optional
 ```
 
+Expected layout (paths are relative to `{{ traefik_compose_dir }}/tls/`):
+
+```
+tls/
+├── cert.pem
+├── key.pem
+└── traefik.example.com/
+    ├── cert.pem
+    └── key.pem
+```
+
 ### Extra labels
 
 Additional Docker labels to apply to the Traefik container:
