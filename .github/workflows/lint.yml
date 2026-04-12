@@ -14,7 +14,7 @@ jobs:
       - name: ⤵️ Checkout
         uses: actions/checkout@v6
       - name: 🚀 Run yamllint
-        run: yamllint .
+        run: yamllint --strict .
 
   ansible-lint:
     name: Ansible Lint
