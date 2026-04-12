@@ -47,11 +47,6 @@ argument_specs:
         default: false
         description: Whether to enable the Traefik dashboard.
 
-      traefik_api_disable_ad:
-        type: bool
-        default: true
-        description: Whether to disable the advertisement banner in the dashboard.
-
       traefik_api_insecure:
         type: bool
         default: false

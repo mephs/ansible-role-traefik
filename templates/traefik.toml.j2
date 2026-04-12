@@ -28,8 +28,8 @@
     directory = "/traefik.d"
 
 [api]
+  disabledashboardad = true
   dashboard = {{ traefik_api_dashboard | lower }}
-  disabledashboardad = {{ traefik_api_disable_ad | lower }}
   insecure = {{ traefik_api_insecure | lower }}
   debug = {{ traefik_api_debug | lower }}
 
