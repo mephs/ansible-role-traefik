@@ -15,6 +15,11 @@ services:
       - ./tls:/tls:ro
       - ./traefik.d:/traefik.d:ro
       - ./traefik.toml:/etc/traefik/traefik.toml:ro
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     labels:
       - traefik.enable=true
       {% if traefik_api_dashboard | bool %}

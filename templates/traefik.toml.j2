@@ -17,6 +17,8 @@
   [entryPoints.websecure]
     address = ":443"
     [entryPoints.websecure.http.tls]
+  [entryPoints.ping]
+    address = ":8082"
 
 [providers]
   [providers.docker]
@@ -30,6 +32,9 @@
   disabledashboardad = {{ traefik_api_disable_ad | lower }}
   insecure = {{ traefik_api_insecure | lower }}
   debug = {{ traefik_api_debug | lower }}
+
+[ping]
+  entryPoint = "ping"
 
 [log]
   level = "{{ traefik_log_level | upper }}"
