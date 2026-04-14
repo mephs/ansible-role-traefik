@@ -24,18 +24,18 @@ services:
       timeout: 3s
       retries: 3
     labels:
-      - traefik.enable=true
+      traefik.enable: true
 {% if traefik_api_dashboard | bool %}
-      - traefik.http.routers.dashboard.rule=Host(`{{ traefik_dashboard_host }}`)
-      - traefik.http.routers.dashboard.service=api@internal
-      - traefik.http.routers.dashboard.entrypoints={{ 'websecure' if traefik_dashboard_tls else 'web' }}
+      traefik.http.routers.dashboard.rule: Host(`{{ traefik_dashboard_host }}`)
+      traefik.http.routers.dashboard.service: api@internal
+      traefik.http.routers.dashboard.entrypoints: {{ 'websecure' if traefik_dashboard_tls else 'web' }}
 {% if traefik_dashboard_tls %}
-      - traefik.http.routers.dashboard.tls=true
+      traefik.http.routers.dashboard.tls: true
 {% endif %}
 {% endif %}
-{% for key, value in traefik_extra_labels.items() %}
-      - "{{ key }}={{ value | lower if value is boolean else value }}"
-{% endfor %}
+{% if traefik_extra_labels %}
+{{ traefik_extra_labels | to_nice_yaml(indent=2) | indent(6, True) }}
+{% endif %}
 networks:
   {{ traefik_docker_network }}:
     external: true
