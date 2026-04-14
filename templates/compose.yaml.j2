@@ -10,9 +10,9 @@ services:
     ports:
       - {{ traefik_http_port }}:80
       - {{ traefik_https_port }}:443
-      {% if traefik_metrics_prometheus %}
+{% if traefik_metrics_prometheus %}
       - {{ traefik_metrics_address }}:{{ traefik_metrics_port }}:8081
-      {% endif %}
+{% endif %}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./tls:/tls:ro
@@ -25,17 +25,17 @@ services:
       retries: 3
     labels:
       - traefik.enable=true
-      {% if traefik_api_dashboard | bool %}
+{% if traefik_api_dashboard | bool %}
       - traefik.http.routers.dashboard.rule=Host(`{{ traefik_dashboard_host }}`)
       - traefik.http.routers.dashboard.service=api@internal
       - traefik.http.routers.dashboard.entrypoints={{ 'websecure' if traefik_dashboard_tls else 'web' }}
-      {% if traefik_dashboard_tls %}
+{% if traefik_dashboard_tls %}
       - traefik.http.routers.dashboard.tls=true
-      {% endif %}
-      {% endif %}
-      {% for key, value in traefik_extra_labels.items() %}
+{% endif %}
+{% endif %}
+{% for key, value in traefik_extra_labels.items() %}
       - "{{ key }}={{ value | lower if value is boolean else value }}"
-      {% endfor %}
+{% endfor %}
 networks:
   {{ traefik_docker_network }}:
     external: true
