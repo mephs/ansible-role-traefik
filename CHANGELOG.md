@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/mephs/ansible-role-traefik/compare/v1.0.0...v1.0.1) (2026-04-15)
+
+
+### 🐛 Bug Fixes
+
+* prevent blank lines from jinja blocks in compose template ([4410a5d](https://github.com/mephs/ansible-role-traefik/commit/4410a5da397e6f10d17e5303cc67335fa743e7ce))
+
 ## 1.0.0 (2026-04-12)
 
 
